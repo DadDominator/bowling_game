@@ -5,7 +5,7 @@ namespace BowlingGame;
 public class Frame : IFrame
 {
     private const int RollLimit = 2;
-    public readonly Dictionary<int, IRoll> Rolls = new Dictionary<int, IRoll>();
+    public readonly Dictionary<int, IRoll> Rolls = new();
 
     public void StartNewFrame(int frameNumber)
     {

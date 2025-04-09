@@ -5,7 +5,7 @@ namespace BowlingGame;
 public class Game : IGame
 {
     private const int FrameLimit = 10;
-    public readonly Dictionary<int, IFrame> Frames = new Dictionary<int, IFrame>();
+    public readonly Dictionary<int, IFrame> Frames = new();
 
     public void StartNewGame()
     {
