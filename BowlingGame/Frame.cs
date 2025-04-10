@@ -14,15 +14,30 @@ public class Frame : IFrame
         {
             Console.WriteLine($"Please, enter a value for roll {i} of frame {frameNumber}");
             var rollValue = Console.ReadLine();
-            if (int.TryParse(rollValue, out var roll) && roll is >= 1 and <= 10)
+            if (int.TryParse(rollValue, out var roll) && roll is >= 0 and <= 10)
             {
-                Rolls.Add(i, new Roll(roll));
+                if (i == 2 && (Convert.ToInt32(rollValue) + Rolls[i - 1].Value) is < 0 or > 10)
+                {
+                    Console.WriteLine($"Invalid roll: {roll}. Total Frame score must be between 0 and 10.");
+                    i--;
+                    continue;
+                }
+                else
+                {
+                    Rolls.Add(i, new Roll(roll));
+                }
             }
             else
             {
-                Console.WriteLine($"Invalid roll: {roll}. Value must be a number between 1 and 10.");
+                Console.WriteLine($"Invalid roll: {roll}. Value must be a number between 0 and 10.");
                 i--;
                 continue;
+            }
+
+            if (i == 1 && GetScore() == 10)
+            {
+                rollLimit = 1;
+                Rolls.Add(2, new Roll(0));
             }
 
             if (frameNumber == 10 && (IsStrike(i) || IsSpare(i)))
