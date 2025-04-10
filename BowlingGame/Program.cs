@@ -16,7 +16,5 @@ class Program
         var game = serviceProvider.GetService<IGame>();
         game.StartNewGame();
         Console.WriteLine($"Total Score: {game.GetScore()}");
-        
-        //TODO Praise
     }
 }

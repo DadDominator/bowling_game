@@ -22,7 +22,7 @@ public class Frame : IFrame
             
             if (int.TryParse(rollValue, out var roll) && roll is >= 0 and <= 10)
             {
-                if (i == 2 && (Convert.ToInt32(rollValue) + Rolls[i - 1].Value) is < 0 or > 10)
+                if (i == 2 && frameNumber != 10 && (Convert.ToInt32(rollValue) + Rolls[i - 1].Value) is < 0 or > 10)
                 {
                     Console.WriteLine($"Invalid roll: {roll}. Total Frame score must be between 0 and 10.");
                     i--;
@@ -41,10 +41,9 @@ public class Frame : IFrame
                 continue;
             }
 
-            if (i == 1 && GetScore() == 10)
+            if (i == 1 && frameNumber != 10 && GetScore() == 10)
             {
                 rollLimit = 1;
-                Rolls.Add(2, new Roll(0));
             }
 
             if (frameNumber == 10 && (IsStrike(i) || IsSpare(i)))
@@ -73,6 +72,6 @@ public class Frame : IFrame
     {
         if (roll != 2) return false;
         
-        return Rolls[roll].Value + Rolls[roll - 1].Value == 10;
+        return GetScore() == 10;
     }
 }
