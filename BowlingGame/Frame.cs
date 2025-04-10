@@ -12,8 +12,14 @@ public class Frame : IFrame
         var rollLimit = RollLimit;
         for (var i = 1; i <= rollLimit; i++)
         {
-            Console.WriteLine($"Please, enter a value for roll {i} of frame {frameNumber}");
+            Console.WriteLine($"Please, enter a value for roll {i} of frame {frameNumber} (Click enter to supply a random roll)");
             var rollValue = Console.ReadLine();
+            if (rollValue == "")
+            {
+                var rnd = new Random();
+                rollValue = rnd.Next(0, 11 - GetScore()).ToString(); 
+            }
+            
             if (int.TryParse(rollValue, out var roll) && roll is >= 0 and <= 10)
             {
                 if (i == 2 && (Convert.ToInt32(rollValue) + Rolls[i - 1].Value) is < 0 or > 10)
@@ -25,6 +31,7 @@ public class Frame : IFrame
                 else
                 {
                     Rolls.Add(i, new Roll(roll));
+                    Console.WriteLine($"Roll {i} of frame {frameNumber}: {rollValue}");
                 }
             }
             else
